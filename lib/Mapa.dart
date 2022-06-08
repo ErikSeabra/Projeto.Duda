@@ -1,4 +1,9 @@
+import 'package:duda/Cadastro.dart';
+import 'package:duda/Loading02.dart';
+import 'package:duda/Login.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class Mapa extends StatefulWidget {
   const Mapa({Key? key}) : super(key: key);
@@ -60,6 +65,17 @@ class _Mapa extends State<Mapa>
         ListTile(
           title: const Text('Grupos'),
           onTap: () => Navigator.of(context).push(_NewPage()),
+        ),
+        ListTile(
+          title: const Text('Sair'),
+          onTap: () {
+            FirebaseAuth.instance.signOut().then((value) {
+              print("Usuário deslogado");
+              Navigator.push(
+                context, MaterialPageRoute(builder: (context) => login())
+              );
+            });
+          },
         )
       ],
     );

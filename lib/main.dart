@@ -1,3 +1,5 @@
+import 'package:duda/Loading02.dart';
+import 'package:duda/Login.dart';
 import 'package:flutter/material.dart';
 import 'Loading.dart';
 
@@ -13,11 +15,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'DUDA',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: loading(),
+      home: login(),
     );
   }
 }

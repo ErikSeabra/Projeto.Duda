@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "462656671795",
+    "project_id": "projeto-duda-62dc8",
+    "storage_bucket": "projeto-duda-62dc8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462656671795:android:07342b64c609a8c32bd346",
+        "android_client_info": {
+          "package_name": "com.example.duda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "462656671795-hnbao77uojsr53291vpahak8f8j8j0s2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANk0nvIa-530a131AAvUlmD_5d9-42Lyo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "462656671795-hnbao77uojsr53291vpahak8f8j8j0s2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

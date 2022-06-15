@@ -1,4 +1,5 @@
 import 'package:duda/Cadastro.dart';
+import 'package:duda/mapa_locais.dart';
 import 'package:duda/users/models/users.dart';
 import 'package:duda/widget/error_message.dart';
 import 'package:flutter/gestures.dart';
@@ -24,7 +25,6 @@ class _loginState extends State<login> {
     await Firebase.initializeApp();
     Firebase.initializeApp().whenComplete(()=>print('Conectado ao Firebase'));
   }
-
   @override
   Widget build(BuildContext context) {
     inicializarFirebase();

@@ -10,9 +10,10 @@ class InputPhone extends StatefulWidget {
   Color cor;
   String label;
   bool isPassword;
+  bool isTelefone;
   TextEditingController controller;
 
-  InputPhone(this.cor, this.label, this.isPassword, {required this.controller});
+  InputPhone(this.cor, this.label, this.isPassword, this.isTelefone, {required this.controller});
 
   @override
   State<InputPhone> createState() => _InputPhoneState();
@@ -46,7 +47,7 @@ class _InputPhoneState extends State<InputPhone> {
     return Padding(
       padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
       child: TextField(
-        inputFormatters: [maskFormatter],
+        inputFormatters: widget.isTelefone ? [maskFormatter] : [],
         focusNode: _focusNode,
         obscureText: widget.isPassword,
         enableSuggestions: widget.isPassword == true ? false : true,

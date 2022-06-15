@@ -1,11 +1,13 @@
 import 'package:duda/Cadastro.dart';
-import 'package:duda/Loading02.dart';
+import 'package:duda/Grupos.dart';
 import 'package:duda/Login.dart';
 import 'package:duda/mapa_alertas.dart';
 import 'package:duda/mapa_eventos.dart';
 import 'package:duda/mapa_locais.dart';
+import 'package:duda/widget/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class Mapa extends StatefulWidget {
@@ -17,9 +19,33 @@ class Mapa extends StatefulWidget {
 
 class _Mapa extends State<Mapa> {
   int _currentTabIndex = 0;
+  late User mCurrentUser;
+  String _uname = '';
+  String _email = '';
+  bool anonimo = false;
+
+  late FirebaseAuth _auth;
+
+  _getCurrentUser () async {
+    _auth = FirebaseAuth.instance;
+    
+    if (_auth.currentUser != null) {
+      mCurrentUser = _auth.currentUser!;
+      DocumentSnapshot usuario = await FirebaseFirestore.instance.collection('users').doc(mCurrentUser.email).get();
+      setState(() {
+        _uname = usuario["nome"] != '' ? usuario["nome"] : "";
+        _email = usuario["user"] != '' ? usuario["user"] : "";
+      });
+    }else{
+      setState(() {
+        anonimo = true;
+      });
+    }
+  }
   
   @override
   Widget build(BuildContext context){
+    _getCurrentUser();
     final _ktabPages = [
       mapaLocais(),
       mapaAlertas(),
@@ -41,40 +67,6 @@ class _Mapa extends State<Mapa> {
            });
          },
      );
-    const drawerHeader = UserAccountsDrawerHeader(
-      accountName: Text('Usuario'),
-      accountEmail: Text('Usuario@gmail.com'),
-      currentAccountPicture: CircleAvatar(
-        backgroundColor: Colors.white,
-        child: FlutterLogo(size: 42.0),
-      ),
-      otherAccountsPictures: [
-        CircleAvatar(
-          backgroundColor: Colors.amber,
-          child: Text('A'),
-        )
-      ],
-    );
-    final drawerItems = ListView(
-      children: [
-        drawerHeader,
-        ListTile(
-          title: const Text('Grupos'),
-          onTap: () => Navigator.of(context).push(_NewPage()),
-        ),
-        ListTile(
-          title: const Text('Sair'),
-          onTap: () {
-            FirebaseAuth.instance.signOut().then((value) {
-              print("Usuário deslogado");
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => login())
-              );
-            });
-          },
-        )
-      ],
-    );
   
     return Scaffold(
       appBar: AppBar(
@@ -83,7 +75,7 @@ class _Mapa extends State<Mapa> {
       body: _ktabPages[_currentTabIndex],
       bottomNavigationBar: bottomNavBar,
       drawer: Drawer(
-        child: drawerItems,
+        child: MenuLateral(_uname, _email, anonimo),
       ),
     );
   }

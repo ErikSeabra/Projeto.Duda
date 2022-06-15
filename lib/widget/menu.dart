@@ -23,10 +23,10 @@ class MenuLateral extends StatelessWidget {
         UserAccountsDrawerHeader(
           accountName: Text(_uname),
           accountEmail: Text(_email),
-          currentAccountPicture: CircleAvatar(
+          /* currentAccountPicture: CircleAvatar(
             backgroundColor: Colors.white,
             child: FlutterLogo(size: 42.0),
-          ),
+          ), */
           otherAccountsPictures: [
             IconButton(
               onPressed: (){

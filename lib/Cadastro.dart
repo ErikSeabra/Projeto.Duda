@@ -73,7 +73,7 @@ class _CadastroState extends State<Cadastro> {
             InputText(Color.fromARGB(255, 231, 168, 50), 'Nome', false, controller: _nome),
             InputText(Color.fromARGB(255, 231, 168, 50), 'E-mail', false, controller: _user),
             InputText(Color.fromARGB(255, 231, 168, 50), 'Senha', true, controller: _password),
-            InputPhone(Color.fromARGB(255, 231, 168, 50), 'Telefone', false, controller: _telefone),
+            InputPhone(Color.fromARGB(255, 231, 168, 50), 'Telefone', false, true, controller: _telefone),
     
             Container(
               width: 180,

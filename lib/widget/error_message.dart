@@ -5,9 +5,10 @@ import 'package:flutter/src/widgets/framework.dart';
 class ErrorMessage extends StatelessWidget {
   String errorText;
   String text;
+  Color cor;
 
 
-  ErrorMessage(this.text, this.errorText);
+  ErrorMessage(this.text, this.errorText, this.cor);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class ErrorMessage extends StatelessWidget {
         padding: EdgeInsets.all(16),
         height: 90,
         decoration: BoxDecoration(
-          color: Colors.red,
+          color: cor,
           borderRadius: BorderRadius.all(Radius.circular(20))
         ),
         child: Column(
@@ -35,5 +36,5 @@ class ErrorMessage extends StatelessWidget {
         )
       )
     );
-   }
+  }
 }

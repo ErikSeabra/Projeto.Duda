@@ -1,5 +1,5 @@
 import 'package:duda/Cadastro.dart';
-import 'package:duda/users/models/users.dart';
+import 'package:duda/models/users.dart';
 import 'package:duda/widget/error_message.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -183,9 +183,10 @@ class _loginState extends State<login> {
       print("Error ${error.toString()}");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: ErrorMessage("Erro",erroNovo),
+          content: ErrorMessage("Erro",erroNovo, Colors.red),
           behavior: SnackBarBehavior.floating,
           backgroundColor: Colors.transparent,
+          margin: EdgeInsets.only(bottom: 615, right: 10),
           elevation: 0,
         ),
       );

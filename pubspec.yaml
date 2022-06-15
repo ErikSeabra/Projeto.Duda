@@ -48,6 +48,7 @@ dev_dependencies:
   cloud_firestore: ^3.1.17
   firebase_core: ^1.17.1
   firebase_auth: ^3.3.19
+  mask_text_input_formatter: ^2.3.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

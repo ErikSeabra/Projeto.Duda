@@ -15,15 +15,13 @@ class Usuarios {
     'user':user,
     'nome':nome,
     'telefone':telefone,
-
-
     'dt': dt
   };
 
   Usuarios.fromSnapshot(DocumentSnapshot snapshot):
-    user = snapshot['user'],
-    nome = snapshot['nome'],
-    telefone = snapshot['telefone'],
+  user = snapshot['user'],
+  nome = snapshot['nome'],
+  telefone = snapshot['telefone'],
 
-    dt = snapshot['dt'].toDate(); 
+  dt = snapshot['dt'].toDate(); 
 }

@@ -1,6 +1,9 @@
 import 'package:duda/Cadastro.dart';
 import 'package:duda/Loading02.dart';
 import 'package:duda/Login.dart';
+import 'package:duda/mapa_alertas.dart';
+import 'package:duda/mapa_eventos.dart';
+import 'package:duda/mapa_locais.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -12,39 +15,32 @@ class Mapa extends StatefulWidget {
   State<StatefulWidget> createState() => _Mapa();
 }
 
-class _Mapa extends State<Mapa>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
-  static const _kTabPages = <Widget>[
-    Center(child: Icon(Icons.battery_alert, size: 64.0, color: Colors.red)),
-    Center(child: Icon(Icons.add_location_rounded, size: 64.0, color: Colors.cyan)),
-    Center(child: Icon(Icons.accessible, size: 64.0, color: Colors.green)),
-  ];
-  static const _kTabs = <Tab>[
-
-    Tab(icon: Icon(Icons.cloud), text: 'Alertas'),
-    Tab(icon: Icon(Icons.alarm), text: 'Locais'),
-    Tab(icon: Icon(Icons.forum), text: 'Eventos'),
-  ];
-
+class _Mapa extends State<Mapa> {
+  int _currentTabIndex = 0;
+  
   @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(
-      length: _kTabPages.length,
-      vsync: this,
-    );
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    final _ktabPages = [
+      mapaLocais(),
+      mapaAlertas(),
+      mapaEventos(),
+    ];
+    final _kBottmonNavBarItems = [
+      const BottomNavigationBarItem(icon: Icon(Icons.add_location_outlined), label: 'Locais'),
+      const BottomNavigationBarItem(icon: Icon(Icons.warning_amber_outlined), label: 'Alertas'),
+      const BottomNavigationBarItem(icon: Icon(Icons.where_to_vote_rounded), label: 'Eventos'),
+    ];
+    assert(_ktabPages.length ==  _kBottmonNavBarItems.length);
+     final bottomNavBar = BottomNavigationBar(
+         items: _kBottmonNavBarItems,
+         currentIndex: _currentTabIndex,
+         type: BottomNavigationBarType.fixed,
+         onTap: (int index){
+           setState(() {
+             _currentTabIndex = index;
+           });
+         },
+     );
     const drawerHeader = UserAccountsDrawerHeader(
       accountName: Text('Usuario'),
       accountEmail: Text('Usuario@gmail.com'),
@@ -72,36 +68,28 @@ class _Mapa extends State<Mapa>
             FirebaseAuth.instance.signOut().then((value) {
               print("Usuário deslogado");
               Navigator.push(
-                context, MaterialPageRoute(builder: (context) => login())
+                  context, MaterialPageRoute(builder: (context) => login())
               );
             });
           },
         )
       ],
     );
+  
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.deepPurple,
-        bottom: new TabBar(
-          controller: _tabController,
-          tabs: [
-            new Tab(icon: Icon(Icons.cloud), text: 'Alertas'),
-            new Tab(icon: Icon(Icons.alarm), text: 'Locais'),
-            new Tab(icon: Icon(Icons.forum), text: 'Eventos'),
-          ],
-        ),
+        backgroundColor: Colors.deepPurple,
       ),
-      body: TabBarView(
-
-        controller: _tabController,
-        children: _kTabPages,
-      ),
+      body: _ktabPages[_currentTabIndex],
+      bottomNavigationBar: bottomNavBar,
       drawer: Drawer(
         child: drawerItems,
       ),
     );
   }
 }
+
+
 class _NewPage extends MaterialPageRoute{
   _NewPage()
       : super(
@@ -118,5 +106,3 @@ class _NewPage extends MaterialPageRoute{
       }
   );
 }
-
-

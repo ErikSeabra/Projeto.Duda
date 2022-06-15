@@ -1,4 +1,5 @@
 import 'package:duda/Cadastro.dart';
+import 'package:duda/mapa_locais.dart';
 import 'package:duda/models/users.dart';
 import 'package:duda/widget/error_message.dart';
 import 'package:flutter/gestures.dart';

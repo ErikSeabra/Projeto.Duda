@@ -1,9 +1,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.duda">
-   <application
+    <uses-permission android:name="android.permission.ACSESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+
+    <application
         android:label="Duda"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBiGqiB5C7uVYFXxzqfZ6U3JW_9dGC4bs4"
+            />
         <activity
             android:name=".MainActivity"
             android:exported="true"

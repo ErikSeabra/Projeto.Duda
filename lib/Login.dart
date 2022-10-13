@@ -8,6 +8,8 @@ import 'package:duda/Mapa.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:progress_state_button/iconed_button.dart';
+import 'package:progress_state_button/progress_button.dart';
 
 
 class login extends StatefulWidget {
@@ -20,6 +22,7 @@ class login extends StatefulWidget {
 class _loginState extends State<login> {
   final _user = TextEditingController();
   final _password = TextEditingController();
+  ButtonState stateTextWithIcon = ButtonState.idle;
 
   Future <void> inicializarFirebase() async {
     await Firebase.initializeApp();
@@ -103,16 +106,28 @@ class _loginState extends State<login> {
             width: 230,
             height: 70,
             padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-              primary: Colors.deepPurple, //Cor do botão
-              onPrimary: Colors.white, //Cor do trexto dentro do botão
-              shape: RoundedRectangleBorder( // Deixando o botão circular
-                borderRadius: BorderRadius.circular(50), // <-- Radius
+            child: ProgressButton.icon(iconedButtons: {
+              ButtonState.idle: IconedButton(
+                color: Colors.deepPurple,
+                text: "Entrar",
               ),
+              ButtonState.loading: IconedButton(
+                icon: Icon(Icons.send, color: Colors.white),
+                color: Colors.deepPurple,
+                text: "Carregando",
               ),
-              child: Text('Entrar'),
-              onPressed: () {_logarConta(context);},
+              ButtonState.fail: IconedButton(
+                color: Colors.deepPurple,
+                text: "Entrar",
+              ),
+              ButtonState.success: IconedButton(
+                text: "Sucesso",
+                color: Colors.green.shade400
+              ),
+            },
+              onPressed: () {
+                carregarBotao(context);},
+                state: stateTextWithIcon,
             ),
           ),
           SizedBox(height: size.height * 0.04),
@@ -168,6 +183,9 @@ class _loginState extends State<login> {
       email: _user.text, 
       password: _password.text).then((value) {
         _abreOutraTela(ctx, Mapa());
+        setState(() {
+          stateTextWithIcon = ButtonState.idle;
+        });
     }).onError((error, stackTrace) {
       String erroNovo;
       if (error.toString() == "[firebase_auth/unknown] Given String is empty or null") {
@@ -191,23 +209,17 @@ class _loginState extends State<login> {
           elevation: 0,
         ),
       );
+      setState(() {
+        stateTextWithIcon = ButtonState.idle;
+      });
       // Or use a `print('Could not launch $url')` instead.
     });
   }
-  void _clicksend(BuildContext ctx) {
-    Usuarios l = new Usuarios();
-    l.user = _user.text.toString().trim();
-    l.password = _password.text.toString();
-    l.dt = DateTime.now();
-    CollectionReference instanciaColecao = FirebaseFirestore.instance.collection("users");
-    Future <void> addUser(){
-      return instanciaColecao
-      .doc()
-      .set(l.toJson())
-      .then((value) => print("Usuario adicionado"))
-      .catchError((onError)=>print("Erro ao gravar no banco $onError"));
-    }
-    addUser();
+  Future carregarBotao(ctx) async {
+    setState(() {
+      stateTextWithIcon = ButtonState.loading;
+    });
+    _logarConta(ctx);
   }
 }
 _abreOutraTela(ctx, page){

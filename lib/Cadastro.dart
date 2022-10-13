@@ -9,6 +9,8 @@ import 'package:duda/Mapa.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:progress_state_button/iconed_button.dart';
+import 'package:progress_state_button/progress_button.dart';
 
 
 class Cadastro extends StatefulWidget {
@@ -22,6 +24,7 @@ class _CadastroState extends State<Cadastro> {
   final _user = TextEditingController();
   final _password = TextEditingController();
   final _nome = TextEditingController();
+  ButtonState stateTextWithIcon = ButtonState.idle;
   final _telefone = TextEditingController();
 
 
@@ -79,15 +82,28 @@ class _CadastroState extends State<Cadastro> {
               width: 180,
               height: 70,
               padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                primary: Color.fromARGB(255, 231, 168, 50), //Cor do botão
-                onPrimary: Colors.white, //Cor do trexto dentro do botão
-                shape: RoundedRectangleBorder( // Deixando o botão circular
-                  borderRadius: BorderRadius.circular(50), // <-- Radius
-                ),),
-              child: Text('Cadastrar'),
-              onPressed: () {_clicksend(context);},
+              child: ProgressButton.icon(iconedButtons: {
+                ButtonState.idle: IconedButton(
+                  color: Color.fromARGB(255, 231, 168, 50),
+                  text: "Cadastrar",
+                ),
+                ButtonState.loading: IconedButton(
+                  icon: Icon(Icons.send, color: Colors.white),
+                  color: Color.fromARGB(255, 231, 168, 50),
+                  text: "Carregando",
+                ),
+                ButtonState.fail: IconedButton(
+                  color: Color.fromARGB(255, 231, 168, 50),
+                  text: "Cadastrar",
+                ),
+                ButtonState.success: IconedButton(
+                  text: "Sucesso",
+                  color: Colors.green.shade400
+                ),},
+                onPressed: () {
+                  _clicksend(context);
+                },
+                state: stateTextWithIcon,
               ),
             ),
             SizedBox(height: size.height * 0.02),
@@ -114,6 +130,9 @@ class _CadastroState extends State<Cadastro> {
     );
   }
   void _clicksend(BuildContext ctx) {
+    setState(() {
+      stateTextWithIcon = ButtonState.loading;
+    });
     if (_nome.text.toString().length > 0 && _telefone.text.toString().length > 0) {
       FirebaseAuth.instance.createUserWithEmailAndPassword(email: _user.text.trim(), 
         password: _password.text).then((value) {
@@ -130,6 +149,9 @@ class _CadastroState extends State<Cadastro> {
         );
         }).onError((error, stackTrace) {
           String erroNovo;
+            setState(() {
+              stateTextWithIcon = ButtonState.idle;
+            });
           if (error.toString() == "[firebase_auth/unknown] Given String is empty or null") {
           erroNovo = "Os campos não podem estar vazios, favor conferir e tentar novamente.";
         }else if(error.toString() == "[firebase_auth/invalid-email] The email address is badly formatted."){
@@ -154,6 +176,9 @@ class _CadastroState extends State<Cadastro> {
         // Or use a `print('Could not launch $url')` instead.
       });
     }else{
+      setState(() {
+        stateTextWithIcon = ButtonState.idle;
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: ErrorMessage("Erro","Os campos não podem estar vazios, favor conferir e tentar novamente.", Colors.red),

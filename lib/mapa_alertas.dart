@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
+
 class mapaAlertas extends StatefulWidget {
   const mapaAlertas({Key? key}) : super(key: key);
 
@@ -16,6 +17,7 @@ class mapaAlertas extends StatefulWidget {
 }
 
 class _mapaAlertasState extends State<mapaAlertas> {
+  
   late GoogleMapController googleMapController;
 
   static const CameraPosition initialCameraPosition = CameraPosition(target: LatLng(-23.641974650177538, -47.82745159127637), zoom: 14);
@@ -25,24 +27,28 @@ class _mapaAlertasState extends State<mapaAlertas> {
   final List<Marker> _list = const[
     Marker(
         markerId: MarkerId('1'),
+        icon: BitmapDescriptor.defaultMarker,
         position: LatLng(-23.63950572000287, -47.82038710256803),
         infoWindow: InfoWindow(
-            title: 'Nome: Deparecimento',
-
+            title: 'Nome: Falta de acessibilidade',
+            snippet: "R. das Hortências, 505 - Sarapui, Sarapuí - SP, 18220-000",
         )
     ),
     Marker(
         markerId: MarkerId('2'),
         position: LatLng(-23.599916486072374, -48.050642696974656),
         infoWindow: InfoWindow(
-            title: 'Nome: Falta de acessibilidade'
+            title: 'Nome: Falta de acessibilidade',
+            snippet: "R. Francisco Rodrigues Junior, 251 - Central Parque 4-L, Itapetininga - SP, 18205-590"
         )
     ),
     Marker(
         markerId: MarkerId('3'),
         position: LatLng(-23.600634184452854, -48.05227348001969),
         infoWindow: InfoWindow(
-            title: 'Nome: Violência'
+          title: "Desaparecimento",
+          snippet: "R. José Calazans Luz, 200 - Vila Barth, Itapetininga - SP, 18205-520"
+            
         )
     )
   ];
@@ -88,9 +94,10 @@ class _mapaAlertasState extends State<mapaAlertas> {
           zoomControlsEnabled: false,
           mapType: MapType.normal,
           onMapCreated: (GoogleMapController controller) {
-            googleMapController = controller;
+
           },
         ),
+        
         floatingActionButton: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [FloatingActionButton(
@@ -138,7 +145,9 @@ class _mapaAlertasState extends State<mapaAlertas> {
         )
 
     );
+ 
   }
+  
 
   Future<Position> _determinePosition() async {
     bool serviceEnabled;

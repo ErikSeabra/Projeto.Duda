@@ -27,14 +27,16 @@ class _mapaEventosState extends State<mapaEventos> {
         markerId: MarkerId('1'),
         position: LatLng(-23.63950572000287, -47.82038710256803),
         infoWindow: InfoWindow(
-            title: 'Nome: Confraternização\n\nEndereço: Rua Qualquer\nDescrição: Confraternização tal'
+            title: 'Nome: Confraternização',
+            snippet: "R. das Hortências, 505 - Sarapui, Sarapuí - SP, 18220-000\nData 11/10/2022 10:30",
         )
     ),
     Marker(
         markerId: MarkerId('2'),
         position: LatLng(-23.599464235760536, -48.05185505542261),
         infoWindow: InfoWindow(
-            title: 'Nome: Palesta\n\nEndereço: Rua Qualquer\nDescrição: Palestra sobre esse assunto'
+            title: 'Nome: Palesta',
+            snippet: "R. Francisco Rodrigues Junior, 300 - Vila Barth, Itapetininga - SP, 18205-590\nData20/12/2022 14:00"
         )
     ),
     ];

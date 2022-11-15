@@ -32,28 +32,32 @@ class _mapaLocaisState extends State<mapaLocais> {
     markerId: MarkerId('1'),
     position: LatLng(-23.63950572000287, -47.82038710256803),
     infoWindow: InfoWindow(
-      title: 'Nome: Pousada'
+      title: 'Nome: Pousada',
+      snippet: "R. das Hortências, 505 - Sarapui, Sarapuí - SP, 18220-000"
       )
     ),
     Marker(
         markerId: MarkerId('2'),
         position: LatLng(-23.599464235760536, -48.05185505542261),
         infoWindow: InfoWindow(
-            title: 'Nome: Psicologo'
+            title: 'Nome: Psicologo',
+            snippet: "R. Francisco Rodrigues Junior, 300 - Vila Barth, Itapetininga - SP, 18205-590"
         )
     ),
     Marker(
         markerId: MarkerId('2'),
         position: LatLng(-23.599916486072374, -48.050642696974656),
         infoWindow: InfoWindow(
-            title: 'Nome: Hospital'
+            title: 'Nome: Hospital',
+            snippet: "R. Francisco Rodrigues Junior, 251 - Central Parque 4-L, Itapetininga - SP, 18205-590"
         )
     ),
     Marker(
         markerId: MarkerId('3'),
         position: LatLng(-23.600634184452854, -48.05227348001969),
         infoWindow: InfoWindow(
-            title: 'Nome: Escola\n\nEndereço: Rua Qualquer\nDescrição: Educação'
+            title: 'Nome: Escola',
+            snippet: "R. José Calazans Luz, 200 - Vila Barth, Itapetininga - SP, 18205-520"
         )
     )];
 

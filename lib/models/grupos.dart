@@ -5,7 +5,7 @@ class Grupo {
   String url = '';
   String user_doc = '';
   String rede = '';
-
+  bool status = false;
 
   DateTime dt = DateTime.now();
 
@@ -16,7 +16,8 @@ class Grupo {
     'url':url,
     'user_doc':user_doc,
     'rede':rede,
-    'dt': dt
+    'dt': dt,
+    'status': false,
   };
 
   Grupo.fromSnapshot(DocumentSnapshot snapshot):
@@ -24,5 +25,6 @@ class Grupo {
   url = snapshot['url'],
   user_doc = snapshot['user_doc'],
   rede = snapshot['rede'],
+  status = false,
   dt = snapshot['dt'].toDate(); 
 }

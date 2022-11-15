@@ -5,6 +5,8 @@ class Locais {
   double longitude = 0.0;
   String nome = '';
   String descricao = '';
+  String tipo = '';
+  bool status = false;
 
 
   DateTime dt = DateTime.now();
@@ -16,8 +18,8 @@ class Locais {
     'longitude':longitude,
     'nome':nome,
     'descricao':descricao,
-
-
+    'tipo':tipo,
+    'status': false,
     'dt': dt
   };
 
@@ -26,6 +28,7 @@ class Locais {
         longitude = snapshot['longitude'],
         nome = snapshot['nome'],
         descricao = snapshot['descricao'],
-
+        tipo = snapshot['tipo'],
+        status = false,
         dt = snapshot['dt'].toDate();
 } 

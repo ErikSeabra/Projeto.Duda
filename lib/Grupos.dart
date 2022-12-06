@@ -52,6 +52,7 @@ class _Grupos extends State<Grupos> {
     QuerySnapshot data = await FirebaseFirestore.instance.collection('groups').get();
     setState(() {
       grupos = data.docs.length;
+
     });
   }
 

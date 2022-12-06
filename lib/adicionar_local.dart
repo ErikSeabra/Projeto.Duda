@@ -29,8 +29,6 @@ class _adicionarLocalState extends State<adicionarLocal> {
   final _longitude = TextEditingController();
   final _nome = TextEditingController();
   final _descricao = TextEditingController();
-  List<String> list = <String>['Alerta', 'Local', 'Evento'];
-  String selectedValue = "";
 
   late FirebaseAuth _auth;
    late User mCurrentUser;
@@ -71,7 +69,7 @@ class _adicionarLocalState extends State<adicionarLocal> {
       body: _laycomExpanded(),
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
-        title: Text("Cadastro de marcador"),
+        title: Text("Grupos"),
       ),
       drawer: Drawer(
         child: MenuLateral(_uname, _email, anonimo),
@@ -92,10 +90,10 @@ class _adicionarLocalState extends State<adicionarLocal> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Marcador', style: TextStyle(
+                  Text('Locais', style: TextStyle(
                     color: Colors.white,
                     fontFamily: "Mandali",
-                    fontSize: 70,
+                    fontSize: 100,
                     fontWeight: FontWeight.w400,
 
                     shadows: <Shadow>[
@@ -110,50 +108,10 @@ class _adicionarLocalState extends State<adicionarLocal> {
               )
           ),
 
-          InputText(Colors.blue, 'Nome', false, controller: _nome),
-          InputText(Colors.blue, 'Descrição', false, controller: _descricao),
           InputPhone(Colors.blue, 'Latitude', false, false, controller: _latitude),
           InputPhone(Colors.blue, 'Longitude', false, false,controller: _longitude),
-          
-          SizedBox(height: size.height*0.02,),
-
-          Container(
-            width: 350.0,
-            child: ButtonTheme(
-              alignedDropdown: true,
-              child: DropdownButtonFormField<String>(
-                items: list.map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value.toLowerCase(),
-                    child: Text(value),
-                  );
-                }).toList(),
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
-                  labelStyle: TextStyle(
-                    color: Color.fromARGB(255,167,196,254),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                    borderSide: BorderSide(
-                      color:Color.fromARGB(255, 67, 67, 67),
-                    )
-                  ),
-                  
-                ),
-                onChanged: (String? newValue){
-                  setState(() {
-                    selectedValue = newValue!;
-                  });
-                },
-              ),
-            ),
-          ),
-
-                
+          InputText(Colors.blue, 'Nome', false, controller: _nome),
+          InputText(Colors.blue, 'Descrição', false, controller: _descricao),
 
           Container(
             width: 180,
@@ -231,7 +189,6 @@ class _adicionarLocalState extends State<adicionarLocal> {
       l.nome = _nome.text.toString().trim();
       l.descricao = _descricao.text.toString().trim();
       l.dt = DateTime.now();
-      l.tipo = selectedValue.trim();
 
       CollectionReference instanciaColecao = FirebaseFirestore.instance.collection("locais");
       Future <void> addlocais(){
@@ -239,14 +196,14 @@ class _adicionarLocalState extends State<adicionarLocal> {
             .doc()
             .set(l.toJson())
             .then((value) {
-              print("Marcador adicionado");
+              print("Local adicionado");
               setState(() {
                 stateTextWithIcon = ButtonState.idle;
               });
               _abreOutraTela(ctx, Mapa());
               ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: ErrorMessage("Sucesso","Marcador adicionado com sucesso!", Colors.green),
+                content: ErrorMessage("Sucesso","Local inserido com sucesso!", Colors.green),
                 behavior: SnackBarBehavior.floating,
                 backgroundColor: Colors.transparent,
                 margin: EdgeInsets.only(bottom: 615),

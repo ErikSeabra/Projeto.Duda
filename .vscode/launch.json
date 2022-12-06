@@ -8,7 +8,7 @@
             "name": "cel A01",
             "request": "launch",
             "type": "dart",
-            "deviceId": "R9XNA09HHYP"
+            //"deviceId": "R9XNA09HHYP"
         },
         {
             "name": "Projeto.Duda (profile mode)",
